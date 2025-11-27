@@ -35,25 +35,44 @@ def transform_log_scale(df):
 
 
 #There is something weird with this, it creates new columns. I tried with OrdinalEncoder and it worked, but then I changed it back because I read that it is not stable(?) - I will look into it<3
-def transform_cat(df):
-    df = df.copy()
+# def transform_cat(df):
+#     df = df.copy()
 
-    categorical_features = ['VehBrand', 'VehGas', 'Area', 'Region']
-    numerical_features = [col for col in df.columns if col not in categorical_features]
+#     categorical_features = ['VehBrand', 'VehGas', 'Area', 'Region']
+#     numerical_features = [col for col in df.columns if col not in categorical_features]
 
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), categorical_features),
-            ('num', 'passthrough', numerical_features) #does not contain Standard Scaler becase not all models need that, pls apply manually
-        ],
-        remainder='drop'
-    )
+#     preprocessor = ColumnTransformer(
+#         transformers=[
+#             ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), categorical_features),
+#             ('num', 'passthrough', numerical_features) #does not contain Standard Scaler becase not all models need that, pls apply manually
+#         ],
+#         remainder='drop'
+#     )
 
-    preprocessor.set_output(transform="pandas")
-    new_df = preprocessor.fit_transform(df)
+#     preprocessor.set_output(transform="pandas")
+#     new_df = preprocessor.fit_transform(df)
 
-    new_df.columns = [col.split("__")[-1] for col in new_df.columns]
-    return new_df
+#     new_df.columns = [col.split("__")[-1] for col in new_df.columns]
+#     return new_df
+
+
+categorical_features = ['VehBrand', 'VehGas', 'Area', 'Region']
+numerical_features = [col for col in df.columns if col not in categorical_features]
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), categorical_features),
+        ('num', 'passthrough', numerical_features) #does not contain Standard Scaler becase not all models need that, pls apply manually
+    ],
+    remainder='drop'
+)
+
+preprocessor.set_output(transform="pandas")
+new_df = preprocessor.fit_transform(df)
+preprocessor.get_feature_names_out()
+
+def transform(df):
+    return preprocessor.transform(df)
 
 def pca(df):
     df=df.copy()
