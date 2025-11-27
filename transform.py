@@ -6,8 +6,11 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler, OrdinalEncoder
 from sklearn.decomposition import PCA
 import seaborn as sns
 from sklearn.cluster import DBSCAN
+from sklearn.model_selection import train_test_split
 
 df=pd.read_csv('Project_description_and_data/claims_train.csv')
+df_test=pd.read_csv('Project_description_and_data/claims_test.csv')
+
 
 def transform_log_scale(df):
     df = df.copy()
@@ -15,49 +18,19 @@ def transform_log_scale(df):
     df['VehAge_log']=np.log(df['VehAge_1'])
     df['DrivAge_log']=np.log(df['DrivAge'])
     df['Density_log']=np.log(df['Density'])
-    #df['VehGas'] = np.where(df['VehGas'] == 'Regular', 0, 1) - we convert it in transform_cat
     df.drop(['VehAge', 'VehAge_1', 'DrivAge', 'Density'], axis=1, inplace=True)
     return df
 
-# def transform_cat(df):
-#     df = df.copy()
-#     categorical_features = ['VehBrand', 'VehGas', 'Area', 'Region']
-#     numerical_features = [col for col in df.columns if col not in categorical_features]
-#     preprocessor = ColumnTransformer(
-#     transformers=[
-#         ('cat', OrdinalEncoder(), categorical_features),
-#         ('num', StandardScaler(), numerical_features)],
-#          remainder='passthrough')
-#     preprocessor.set_output(transform="pandas")
-#     new_df = preprocessor.fit_transform(df)
-#     new_df.columns = [col.split("__")[-1] for col in new_df.columns]
-#     return new_df  
+log_transformed_data = transform_log_scale(df)
+log_transformed_test_data = transform_log_scale(df_test)
 
+X = log_transformed_data.drop(columns='ClaimNb')
+Y = log_transformed_data['ClaimNb']
 
-#There is something weird with this, it creates new columns. I tried with OrdinalEncoder and it worked, but then I changed it back because I read that it is not stable(?) - I will look into it<3
-# def transform_cat(df):
-#     df = df.copy()
-
-#     categorical_features = ['VehBrand', 'VehGas', 'Area', 'Region']
-#     numerical_features = [col for col in df.columns if col not in categorical_features]
-
-#     preprocessor = ColumnTransformer(
-#         transformers=[
-#             ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), categorical_features),
-#             ('num', 'passthrough', numerical_features) #does not contain Standard Scaler becase not all models need that, pls apply manually
-#         ],
-#         remainder='drop'
-#     )
-
-#     preprocessor.set_output(transform="pandas")
-#     new_df = preprocessor.fit_transform(df)
-
-#     new_df.columns = [col.split("__")[-1] for col in new_df.columns]
-#     return new_df
-
+X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.2, random_state=42)
 
 categorical_features = ['VehBrand', 'VehGas', 'Area', 'Region']
-numerical_features = [col for col in df.columns if col not in categorical_features]
+numerical_features = [col for col in X_train.columns if col not in categorical_features]
 
 preprocessor = ColumnTransformer(
     transformers=[
@@ -68,11 +41,12 @@ preprocessor = ColumnTransformer(
 )
 
 preprocessor.set_output(transform="pandas")
-new_df = preprocessor.fit_transform(df)
+preprocessor.fit(X_train)
 preprocessor.get_feature_names_out()
 
-def transform(df):
-    return preprocessor.transform(df)
+new_Xtrain = preprocessor.transform(X_train)
+new_Xval = preprocessor.transform(X_val)
+new_test_df = preprocessor.transform(log_transformed_test_data)
 
 def pca(df):
     df=df.copy()
