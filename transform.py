@@ -46,31 +46,36 @@ preprocessor.get_feature_names_out()
 
 new_Xtrain = preprocessor.transform(X_train)
 new_Xval = preprocessor.transform(X_val)
-new_test_df = preprocessor.transform(log_transformed_test_data)
+
+Y_test = log_transformed_test_data['ClaimNb']
+X_test = preprocessor.transform(log_transformed_test_data)
 
 def pca(df):
     df=df.copy()
     df = transform_log_scale(df)
-    df=df[df['ClaimNb']>1] 
+    #df=df[df['ClaimNb']>1] 
 
-    features = ['ClaimNb', 'DrivAge_log', 'VehPower', 'VehAge_log', 'Density_log', 'BonusMalus']
+    features = ['DrivAge_log', 'VehPower', 'VehAge_log', 'Density_log', 'BonusMalus']
 
     X = df[features].copy()
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    pca = PCA(n_components=2)   # for 2D visualization
+    pca = PCA(n_components=5)   # for 2D visualization
     X_pca = pca.fit_transform(X_scaled)
 
     df["PC1"] = X_pca[:, 0]
     df["PC2"] = X_pca[:, 1]
+    df["PC3"] = X_pca[:, 2]
+    df["PC4"] = X_pca[:, 3]
+    df["PC5"] = X_pca[:, 4]
 
     explained = pca.explained_variance_ratio_ 
-    print(f"PC1: {explained[0]:.2%}, PC2: {explained[1]:.2%}, Total: {explained[:2].sum():.2%}")
+    print(f"PC1: {explained[0]:.2%}, PC2: {explained[1]:.2%}, PC3: {explained[2]:.2%}, PC4: {explained[3]:.2%}, PC5: {explained[4]:.2%},  Total: {explained[:5].sum():.2%}")
 
     loadings = pd.DataFrame(
     pca.components_.T,
-    columns=["PC1", "PC2"],
+    columns=["PC1", "PC2", "PC3", "PC4", "PC5"],
     index=features
     )
     print(loadings)
@@ -117,4 +122,5 @@ def cluster_dbscan(df):
             markeredgecolor='k',
             markersize=3)
 
-cluster_dbscan(df)
+show_clusters = cluster_dbscan(df)
+show_clusters
