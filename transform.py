@@ -50,6 +50,35 @@ new_Xval = preprocessor.transform(X_val)
 Y_test = log_transformed_test_data['ClaimNb']
 X_test = preprocessor.transform(log_transformed_test_data)
 
+#adding the pca features 
+pca_features = [
+    'DrivAge_log',
+    'VehPower',
+    'VehAge_log',
+    'Density_log',
+    'BonusMalus'
+]
+
+pca = PCA(n_components=3)
+pca.fit(X_train[pca_features])
+
+PC_train = pca.transform(X_train[pca_features])
+PC_val = pca.transform(X_val[pca_features])
+PC_test = pca.transform(log_transformed_test_data[pca_features])
+
+new_Xtrain["PC1"] = PC_train[:, 0]
+new_Xtrain["PC2"] = PC_train[:, 1]
+new_Xtrain["PC3"] = PC_train[:, 2]
+
+new_Xval["PC1"] = PC_val[:, 0]
+new_Xval["PC2"] = PC_val[:, 1]
+new_Xval["PC3"] = PC_val[:, 2]
+
+X_test["PC1"] = PC_test[:, 0]
+X_test["PC2"] = PC_test[:, 1]
+X_test["PC3"] = PC_test[:, 2]
+
+
 def pca(df):
     df=df.copy()
     df = transform_log_scale(df)
@@ -61,14 +90,11 @@ def pca(df):
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    pca = PCA(n_components=5)   # for 2D visualization
+    pca = PCA(n_components=2)   # for 2D visualization
     X_pca = pca.fit_transform(X_scaled)
 
     df["PC1"] = X_pca[:, 0]
     df["PC2"] = X_pca[:, 1]
-    df["PC3"] = X_pca[:, 2]
-    df["PC4"] = X_pca[:, 3]
-    df["PC5"] = X_pca[:, 4]
 
     explained = pca.explained_variance_ratio_ 
     print(f"PC1: {explained[0]:.2%}, PC2: {explained[1]:.2%}, PC3: {explained[2]:.2%}, PC4: {explained[3]:.2%}, PC5: {explained[4]:.2%},  Total: {explained[:5].sum():.2%}")
@@ -93,8 +119,6 @@ def visualisation(df):
     )
     plt.title("PCA Projection Colored by Claim Number")
     plt.show()
-
-visualisation(df)
 
 
 def cluster_dbscan(df):
@@ -121,6 +145,3 @@ def cluster_dbscan(df):
             markerfacecolor=col,
             markeredgecolor='k',
             markersize=3)
-
-show_clusters = cluster_dbscan(df)
-show_clusters
