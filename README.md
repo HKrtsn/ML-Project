@@ -67,6 +67,7 @@ ML-Project/
 - Anna Pólya (apol@itu.dk)
 - Dimitra Filareti Tsairi (dimt@itu.dk)
 - Hanna Karátson (hanka@itu.dk)
+
 This project was developed as a group submission for a Machine Learning exam.
 
 ## Code References & Acknowledgements
