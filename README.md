@@ -46,7 +46,7 @@ ML-Project/
 │   ├── decision_tree.ipynb            # Decision Tree regressor (from scratch + reference)
 │   ├── ffnn_scratch.ipynb             # Feed-forward neural network (from scratch)
 │   ├── NN.ipynb                       # Neural network (reference implementation)
-│   └── gradient_boost.ipynb           # Gradient Boosting (XGBoost)
+│   └── gradient_boost.ipynb           # Gradient Boosting (XGBoost) M3
 
 ├── img/
 │   ├── pc1_pc2.png
