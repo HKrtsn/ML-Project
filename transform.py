@@ -90,18 +90,19 @@ def pca(df):
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    pca = PCA(n_components=2)   # for 2D visualization
+    pca = PCA(n_components=3)   # for 2D visualization
     X_pca = pca.fit_transform(X_scaled)
 
     df["PC1"] = X_pca[:, 0]
     df["PC2"] = X_pca[:, 1]
+    df["PC3"] = X_pca[:, 2]
 
     explained = pca.explained_variance_ratio_ 
-    print(f"PC1: {explained[0]:.2%}, PC2: {explained[1]:.2%}, PC3: {explained[2]:.2%}, PC4: {explained[3]:.2%}, PC5: {explained[4]:.2%},  Total: {explained[:5].sum():.2%}")
+    print(f"PC1: {explained[0]:.2%}, PC2: {explained[1]:.2%}, PC3: {explained[2]:.2%},  Total: {explained[:3].sum():.2%}")
 
     loadings = pd.DataFrame(
     pca.components_.T,
-    columns=["PC1", "PC2", "PC3", "PC4", "PC5"],
+    columns=["PC1", "PC2", "PC3"],
     index=features
     )
     print(loadings)
@@ -125,14 +126,14 @@ def cluster_dbscan(df):
     df=df.copy()
     df=pca(df)
     X = df[['PC1', 'PC2']].values
-    db = DBSCAN(eps=0.19, min_samples=10).fit(X)
+    db = DBSCAN(eps=0.12, min_samples=4).fit(X)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_
     n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
     print(n_clusters_)
     unique_labels = set(labels)
-    colors = plt.cm.get_cmap('tab10', len(unique_labels))
+    colors = plt.cm.get_cmap('tab20', 30)
 
     for k, col in zip(unique_labels, colors(np.arange(len(unique_labels)))):
         if k == -1:
@@ -140,8 +141,18 @@ def cluster_dbscan(df):
 
         class_member_mask = (labels == k)
         xy = X[class_member_mask]
-    
+
         plt.plot(xy[:, 0], xy[:, 1], 'o',
             markerfacecolor=col,
             markeredgecolor='k',
-            markersize=3)
+            markersize=3,
+            label=f"Cluster {k}" if k != -1 else "Noise"
+            )
+    plt.xlabel("PC1")
+    plt.ylabel("PC2")
+    plt.title("DBSCAN Clustering on PCA Components")
+    plt.legend(title="Clusters", markerscale=2, loc="upper center", bbox_to_anchor=(0.5,-0.1), ncols=3)
+    plt.figure(figsize=(12, 5))
+    plt.tight_layout()
+    plt.show()
+        
