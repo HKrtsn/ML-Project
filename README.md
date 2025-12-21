@@ -26,6 +26,7 @@ Evaluation metrics include **Mean Squared Error (MSE)**, **Mean Absolute Error (
 ## Project Structure
 The repository is organized into notebooks corresponding to each stage of the analysis and each modeling approach:
 
+```
 ML-Project/
 ├── Project_description_and_data/
 │   └── ML_Project_Proposal_2025.pdf   # Project Description
@@ -60,3 +61,10 @@ ML-Project/
 
 ├── LICENSE
 └── README.md
+```
+
+
+
+
+
+
