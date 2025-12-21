@@ -35,7 +35,6 @@ ML-Project/
 
 ├── preprocessing/
 │   ├── data_cleaning.ipynb            # Data cleaning and preprocessing
-│   ├── transform.ipynb                # Feature transformations
 │   ├── transform.py                   # Helper transformation functions
 
 ├── pca_and_clustering/
