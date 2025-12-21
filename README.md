@@ -51,7 +51,6 @@ ML-Project/
 ├── img/
 │   ├── pc1_pc2.png
 │   ├── pc1_pc3.png
-│   ├── pc2_pc3.png
 │   ├── pc_values.png
 │   ├── shap1.png
 │   └── shap2.png
