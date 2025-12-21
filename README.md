@@ -41,9 +41,9 @@ ML-Project/
 │   └── exploratory_data_analysis.ipynb
 
 ├── pca_and_clustering/
-│   ├── pca_clustering_scraps.ipynb     # PCA exploration
-│   ├── clustering.ipynb                # Initial DBSCAN clustering
-│   └── clustering_final.ipynb          # Final clustering results
+│   ├── pca_clustering_scraps.ipynb    # PCA exploration
+│   ├── clustering.ipynb               # Initial DBSCAN clustering
+│   └── clustering_final.ipynb         # Final clustering results
 
 ├── models/
 │   ├── decision_tree.ipynb            # Decision Tree regressor (from scratch + reference)
@@ -68,7 +68,16 @@ ML-Project/
 -
 - Dimitra Filareti Tsairi (dimt@itu.dk)
 
-## Code References
+This project was developed as a group submission for a Machine Learning exam.
+
+## Code References & Acknowledgements
+Parts of this project were inspired by or adapted from the following sourses:
+- **Teaching Assistant (TA) provided solutions and examples**, which were used as guidance for structuring models, preprocessing pipelines and evaluation logic
+- **Artificial Intelligence tools** were used to assist with code debugging, refactoring, improving clarity of implementations.
+- Standard machine learning libraries and documentation
+
+All external inspiration was used for learning and guidance purposes.
+The final implementations and analysis reflect our own understanding and decisions.
 
 
 
