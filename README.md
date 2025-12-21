@@ -35,10 +35,8 @@ ML-Project/
 
 ├── preprocessing/
 │   ├── data_cleaning.ipynb            # Data cleaning and preprocessing
-│   ├── density_log_scaling.ipynb      # Log-scaling of numerical features
 │   ├── transform.ipynb                # Feature transformations
 │   ├── transform.py                   # Helper transformation functions
-│   └── exploratory_data_analysis.ipynb
 
 ├── pca_and_clustering/
 │   ├── pca_clustering_scraps.ipynb    # PCA exploration
