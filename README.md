@@ -63,6 +63,12 @@ ML-Project/
 └── README.md
 ```
 
+## Contributors
+-
+-
+- Dimitra Filareti Tsairi (dimt@itu.dk)
+
+## Code References
 
 
 
