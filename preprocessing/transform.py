@@ -8,8 +8,8 @@ import seaborn as sns
 from sklearn.cluster import DBSCAN
 from sklearn.model_selection import train_test_split
 
-df=pd.read_csv('Project_description_and_data/claims_train.csv')
-df_test=pd.read_csv('Project_description_and_data/claims_test.csv')
+df=pd.read_csv('../Project_description_and_data/claims_train.csv')
+df_test=pd.read_csv('../Project_description_and_data/claims_test.csv')
 
 
 def transform_log_scale(df):

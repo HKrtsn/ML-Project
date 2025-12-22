@@ -39,13 +39,12 @@ ML-Project/
 
 ├── pca_and_clustering/
 │   ├── pca_clustering_scraps.ipynb    # PCA exploration
-│   ├── clustering.ipynb               # Initial DBSCAN clustering
-│   └── clustering_final.ipynb         # Final clustering results
+│   └── clustering.ipynb               # Clustering results
 
 ├── models/
-│   ├── decision_tree.ipynb            # Decision Tree regressor (from scratch + reference)
+│   ├── decision_tree.ipynb            # Decision Tree regressor (from scratch + reference) M1
 │   ├── ffnn_scratch.ipynb             # Feed-forward neural network (from scratch)
-│   ├── NN.ipynb                       # Neural network (reference implementation)
+│   ├── NN.ipynb                       # Neural network (reference implementation) M2
 │   └── gradient_boost.ipynb           # Gradient Boosting (XGBoost) M3
 
 ├── img/
@@ -55,6 +54,7 @@ ML-Project/
 │   ├── shap1.png
 │   └── shap2.png
 
+├── .gitignore
 ├── LICENSE
 └── README.md
 ```
@@ -74,8 +74,4 @@ Parts of this project were inspired by or adapted from the following sourses:
 
 All external inspiration was used for learning and guidance purposes.
 The final implementations and analysis reflect our own understanding and decisions.
-
-
-
-
 
