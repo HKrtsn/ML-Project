@@ -43,7 +43,7 @@ ML-Project/
 
 ├── models/
 │   ├── decision_tree.ipynb            # Decision Tree regressor (from scratch + reference) M1
-│   ├── ffnn_scratch.ipynb             # Feed-forward neural network (from scratch)
+│   ├── ffnn_scratch.ipynb             # Feed-forward neural network (from scratch) M2
 │   ├── NN.ipynb                       # Neural network (reference implementation) M2
 │   └── gradient_boost.ipynb           # Gradient Boosting (XGBoost) M3
 
